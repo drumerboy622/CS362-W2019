@@ -35,5 +35,52 @@ player: player.c interface.o
 
 all: playdom player 
 
+unittestresults: unittest1.c unittest2.c unittest3.c unittest4.c cardtest1.c cardtest2.c cardtest3.c cardtest4.c dominion.c
+
+	echo "Results for unit and card tests:" > unittestresults.out
+	echo "unittest1.c:" >> unittestresults.out
+	gcc -o unittest1 -g unittest1.c dominion.c dominion.h rngs.o $(CFLAGS)
+	./unittest1 >> unittestresults.out
+	gcov dominion.c >> unittestresults.out
+
+	echo "unittest2.c:" >> unittestresults.out
+	gcc -o unittest2 -g unittest2.c dominion.c dominion.h rngs.o $(CFLAGS)
+	./unittest2 >> unittestresults.out
+	gcov dominion.c >> unittestresults.out
+
+	echo "unittest3.c:" >> unittestresults.out
+	gcc -o unittest3 -g unittest3.c dominion.c dominion.h rngs.o $(CFLAGS)
+	./unittest3 >> unittestresults.out
+	gcov dominion.c >> unittestresults.out
+
+	echo "unittest4.c:" >> unittestresults.out
+	gcc -o unittest4 -g unittest4.c dominion.c dominion.h rngs.o $(CFLAGS)
+	./unittest4 >> unittestresults.out
+	gcov dominion.c >> unittestresults.out
+
+	echo "cardtest1.c:" >> unittestresults.out
+	gcc -o cardtest1 -g cardtest1.c dominion.c dominion.h rngs.o $(CFLAGS)
+	./cardtest1 >> unittestresults.out
+	gcov dominion.c >> unittestresults.out
+
+	echo "cardtest2.c:" >> unittestresults.out
+	gcc -o cardtest2 -g cardtest2.c dominion.c dominion.h rngs.o $(CFLAGS)
+	./cardtest2 >> unittestresults.out
+	gcov dominion.c >> unittestresults.out
+
+	echo "cardtest3.c:" >> unittestresults.out
+	gcc -o cardtest3 -g cardtest3.c dominion.c dominion.h rngs.o $(CFLAGS)
+	./cardtest3 >> unittestresults.out
+	gcov dominion.c >> unittestresults.out
+
+	echo "cardtest4.c:" >> unittestresults.out
+	gcc -o cardtest4 -g cardtest4.c dominion.c dominion.h rngs.o $(CFLAGS)
+	./cardtest4 >> unittestresults.out
+	gcov dominion.c >> unittestresults.out
+
+cleanresults:
+	rm unittestresults.out
+
+
 clean:
 	rm -f *.o playdom.exe playdom player player.exe  *.gcov *.gcda *.gcno *.so *.out testDrawCard testDrawCard.exe
