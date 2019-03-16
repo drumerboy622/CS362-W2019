@@ -3,8 +3,9 @@ CFLAGS= -Wall -fpic -coverage -lm -std=c99
 rngs.o: rngs.h rngs.c
 	gcc -c rngs.c -g  $(CFLAGS)
 
-dominion.o: dominion.h dominion.c rngs.o
-	gcc -c dominion.c -g  $(CFLAGS)
+dominion: dominion.h dominion.c rngs.o
+	gcc -o dominion -g  dominion.c dominion.h rngs.c rngs.h $(CFLAGS)
+
 
 playdom: dominion.o playdom.c
 	gcc -o playdom playdom.c -g dominion.o rngs.o $(CFLAGS)
@@ -33,9 +34,6 @@ runtests: testDrawCard
 player: player.c interface.o
 	gcc -o player player.c -g  dominion.o rngs.o interface.o $(CFLAGS)
 
-all: playdom player 
-
-<<<<<<< HEAD
 unittestresults: unittest1.c unittest2.c unittest3.c unittest4.c cardtest1.c cardtest2.c cardtest3.c cardtest4.c dominion.c
 
 	echo "Results for unit and card tests:" > unittestresults.out
@@ -79,10 +77,6 @@ unittestresults: unittest1.c unittest2.c unittest3.c unittest4.c cardtest1.c car
 	./cardtest4 >> unittestresults.out
 	gcov dominion.c >> unittestresults.out
 
-cleanresults:
-	rm unittestresults.out
-
-=======
 randomtestresults : randomtestadventurer.c randomtestcard1.c randomtestcard2.c dominion.c rngs.c
 
 	echo "Results for randomtestadventurer:" >> randomtestadventurer.out
@@ -106,11 +100,16 @@ randomtestresults : randomtestadventurer.c randomtestcard1.c randomtestcard2.c d
 	gcov dominion.c >> randomtestcard2.out
 	gcov dominion.c -b >> randomtestcard2.out
 
+
+all: playdom player 
+
 cleanresults :
 	rm randomtestadventurer.out
 	rm randomtestcard1.out
 	rm randomtestcard2.out
->>>>>>> be5344b507cd8bf6547fe6ebb656e82122aad4b3
+
+cleanresults:
+	rm unittestresults.out
 
 clean:
 	rm -f *.o playdom.exe playdom player player.exe  *.gcov *.gcda *.gcno *.so *.out testDrawCard testDrawCard.exe
